@@ -4,6 +4,7 @@ import chromadb
 from chromadb.utils import embedding_functions
 
 
+
 def baca_pdf(path):
     reader = PdfReader(path)
     return "\n".join((p.extract_text() or "") for p in reader.pages)
@@ -23,7 +24,8 @@ emb = embedding_functions.SentenceTransformerEmbeddingFunction(
 client = chromadb.PersistentClient(path="./chroma_db")   # tersimpan di folder
 koleksi = client.get_or_create_collection(
     name="pedoman", embedding_function=emb,
-    metadata={"hnsw:space": "cosine"})                    # ukuran jarak: cosine
+    metadata={"hnsw:space": "cosine"})      
+# ukuran jarak: cosine
 
 for pdf in Path("dokumen").glob("*.pdf"):
     chunks = potong(baca_pdf(pdf))
